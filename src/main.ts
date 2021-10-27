@@ -7,6 +7,8 @@ import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
 import Camera from './Camera';
 import {setGL} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
+import LSystem from './LSystem';
+import Mesh from './geometry/Mesh';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
@@ -14,8 +16,45 @@ const controls = {
 };
 
 let square: Square;
+let cylinder: Mesh;
 let screenQuad: ScreenQuad;
 let time: number = 0.0;
+let ls: LSystem = new LSystem('F', 3);
+
+function loadTree() {
+  screenQuad = new ScreenQuad();
+  screenQuad.create();
+
+  var origin = vec3.fromValues(0, 0, 0);
+  var objstr = readOBJ('./src/cube.obj');
+  cylinder = new Mesh(objstr, origin);
+  cylinder.create();
+
+  let offsetsArray = [0, 0, 0];
+  let colorsArray = [1.0, 0.0, 1.0, 1.0];
+  
+  let offsets: Float32Array = new Float32Array(offsetsArray);
+  let colors: Float32Array = new Float32Array(colorsArray);
+  cylinder.setInstanceVBOs(offsets, colors);
+  cylinder.setNumInstances(1); // grid of "particles"
+  alert(cylinder.normals);
+}
+
+function readOBJ(file: string): string {
+  var text = "";
+  var rf = new XMLHttpRequest();
+  rf.open("GET", file, false);
+  rf.onreadystatechange = function () {
+      if (rf.readyState === 4) {
+          if (rf.status === 200 || rf.status == 0) {
+              var allText = rf.responseText;
+              text = allText;
+          }
+      }
+  }
+  rf.send(null);
+  return text;
+}
 
 function loadScene() {
   square = new Square();
@@ -49,6 +88,7 @@ function loadScene() {
   square.setNumInstances(n * n); // grid of "particles"
 }
 
+
 function main() {
   // Initial display for framerate
   const stats = Stats();
@@ -73,7 +113,7 @@ function main() {
 
   // Initial call to load scene
   loadScene();
-
+  //loadTree();
   const camera = new Camera(vec3.fromValues(50, 50, 10), vec3.fromValues(50, 50, 0));
 
   const renderer = new OpenGLRenderer(canvas);
@@ -102,6 +142,7 @@ function main() {
     renderer.render(camera, flat, [screenQuad]);
     renderer.render(camera, instancedShader, [
       square,
+      //cylinder,
     ]);
     stats.end();
 
