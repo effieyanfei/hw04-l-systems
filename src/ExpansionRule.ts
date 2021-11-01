@@ -12,8 +12,13 @@ export default class ExpansionRule{
     createRule() {
         var r = Math.random();
         var idx = 0;
-        while(r > this.possibilities[idx]) {
+        var sum = 0;
+        while(r > sum) {
+            sum += this.possibilities[idx];
             idx += 1;
+        }
+        if(idx >= this.rules.length) {
+            idx = this.rules.length - 1;
         }
         this.output = this.rules[idx];
     }
