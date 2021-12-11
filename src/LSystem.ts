@@ -1,6 +1,6 @@
 import ExpansionRule from './ExpansionRule';
 import DrawingRule from './DrawingRule';
-import Turtle from './Tutle';
+import Turtle from "./Turtle";
 import {mat4} from 'gl-matrix';
 import {vec4} from 'gl-matrix';
 import { vec3 } from 'gl-matrix';

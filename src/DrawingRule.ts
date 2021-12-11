@@ -1,4 +1,4 @@
-import Turtle from "./Tutle";
+import Turtle from "./Turtle";
 
 export default class DrawingRule{
     turtle: Turtle;

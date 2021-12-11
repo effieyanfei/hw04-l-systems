@@ -118,7 +118,4 @@ export default class Turtle {
         mat4.multiply(output, output, this.getScaleMatrixCustom(s));
         return output;
     }
-
-
-
 }
