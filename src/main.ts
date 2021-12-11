@@ -57,10 +57,10 @@ function readOBJ(file: string): string {
 
 function loadScene() {
 
-  var objstr1 = readOBJ('./src/cube.obj');
-  var objstr2 = readOBJ('./src/sphere.obj');
-  var objstr3 = readOBJ('./src/bat.obj');
-  var objstr4 = readOBJ('./src/leaf.obj');
+  var objstr1 = readOBJ('https://raw.githubusercontent.com/effieyanfei/hw04-l-systems/master/src/cube.obj');
+  var objstr2 = readOBJ('https://raw.githubusercontent.com/effieyanfei/hw04-l-systems/master/src/sphere.obj');
+  var objstr3 = readOBJ('https://raw.githubusercontent.com/effieyanfei/hw04-l-systems/master/src/bat.obj');
+  var objstr4 = readOBJ('https://raw.githubusercontent.com/effieyanfei/hw04-l-systems/master/src/leaf.obj');
 
   branch = new Mesh(objstr1, vec3.fromValues(0.0, 0.0, 0.0));
   branch.create();
